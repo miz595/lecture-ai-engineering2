@@ -172,6 +172,7 @@ def test_model_reproducibility(sample_data, preprocessor):
         predictions1, predictions2
     ), "モデルの予測結果に再現性がありません"
 
+
 def test_model_compare_with_baseline(train_model):
     """現行モデルとベースラインモデル（過去モデル）を比較し性能劣化がないかチェック"""
     model, X_test, y_test = train_model
@@ -180,6 +181,7 @@ def test_model_compare_with_baseline(train_model):
     # ベースラインモデルがなければskip
     if not os.path.exists(baseline_model_path):
         import pytest
+
         pytest.skip("ベースラインモデルが存在しないためスキップ")
 
     # ベースラインモデルのロード
@@ -194,5 +196,6 @@ def test_model_compare_with_baseline(train_model):
     acc_baseline = accuracy_score(y_test, y_pred_baseline)
 
     # 現行モデルが過去モデルより劣化していないかチェック
-    assert acc_current >= acc_baseline, f"現モデルの精度({acc_current:.4f})が過去モデル({acc_baseline:.4f})を下回っています"
-
+    assert (
+        acc_current >= acc_baseline
+    ), f"現モデルの精度({acc_current:.4f})が過去モデル({acc_baseline:.4f})を下回っています"
